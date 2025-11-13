@@ -20,34 +20,57 @@
             min-width: 5in;
             min-height: 2in;
         }
+        
+        .modal {
+            padding: 50px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        
+        form {
+            min-width: 5in;
+            min-height: 2in;
+        }
     </style>
 
 </head>
 
 <body>
-    <div>
-        <h2>ZIP Form</h1>
-            <div class="ui-widget">
-                <p>Форма для создания архива</p>
-            </div>
-    </div>
-
-    <div>
+    <div class="modal">
         <div>
+            <h2>ZIP Form</h1>
+                <div class="ui-widget">
+                    <p>Форма для создания архива</p>
+                </div>
+        </div>
+
+        <div id="formCreate">
             <h2 class="archiveHeaders">Введите данные</h2>
             <form>
                 <div>
                     <textarea class="archiveTextarea" id="textArchive" rows="3" placeholder="Add text to archive"></textarea>
                 </div>
 
-                <button id="btnCreate" type="button">Create</button>
-            </form>
-        </div>
-    </div>
 
-    <div id="dialog" title="Generate password" style="display: none;">
-        <p>Password</p>
-        <input id="viewPass" type="text" value="" />
+            </form>
+            <button id="btnCreate" type="button">Create</button>
+        </div>
+
+        <div id="formResult" style="display: none;">
+            <h2 class="archiveHeaders">Пароль</h2>
+            <form>
+                <div>
+                    <input id="viewPass" type="text" />
+                </div>
+
+
+            </form>
+            <button id="btnRefresh" type="button">OK</button>
+        </div>
     </div>
 
 
@@ -77,7 +100,23 @@
             link.click()
             link.remove()
         }
-        jQuery("#btnCreate").button();
+
+        function callbackResult() {
+            jQuery("#formResult").show();
+        };
+
+        function callbackCreate() {
+            jQuery("#formCreate").show();
+        };
+
+        jQuery("#btnCreate, #btnRefresh").button();
+
+        jQuery("#btnRefresh").on("click", function() {
+            jQuery("#formResult").hide("fade", "", 1000, callbackCreate);
+        });
+
+
+
         jQuery("#btnCreate").on("click", function() {
 
             function randomPassword() {
@@ -102,17 +141,7 @@
             jQuery("#viewPass").val(genPass);
             $("#dialog").dialog("open");
             jQuery("#textArchive").val("");
-        });
-
-        $("#dialog").dialog({
-            autoOpen: false,
-            width: 400,
-            buttons: [{
-                text: "Ok",
-                click: function() {
-                    $(this).dialog("close");
-                }
-            }]
+            jQuery("#formCreate").hide("fade", "", 1000, callbackResult);
         });
     </script>
 
