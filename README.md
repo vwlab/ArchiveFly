@@ -6,7 +6,8 @@
 2. cd to project floder
 3. docker compose up -d
 4. app will be available on 8080 port
-5. to use custom port pass LISTENPORT variable 
+5. to use custom port define LISTENPORT variable
 ```
-docker compose up -d -e LISTENPORT=8088
+echo "LISTENPORT=8088" | tee -a .env >/dev/null
+docker compose up -d
 ```
