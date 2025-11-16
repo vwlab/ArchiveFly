@@ -1,0 +1,5 @@
+services:
+  archivefly:
+    build: .
+    ports:
+      - ${LISTENPORT:-8080}:80
