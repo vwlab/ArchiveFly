@@ -2,4 +2,4 @@ services:
   archivefly:
     build: .
     ports:
-      - "8080:80"
+      - ${LISTENPORT:-8080}:80
